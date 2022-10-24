@@ -1,39 +1,22 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
 
-<div class="container">
+{% block content %}
+{% load static %}
+<main class="container py-5">
+    <section class="card card-body">
+        <h1 class="display-3 text-center">Dashboard</h1>   
+          <div class="text-center">
+            <img src="{% static 'tasks/images/home.svg' %}" width="420" height="420" alt="">
+          </div> 
+        <div class="text-center">
+            <a class="btn btn-secondary" href="/signin/">
+                Signin
+            </a>
+            <a class="btn btn-dark" href="/signup/">
+                Signup
+            </a>
+        </div>
+    </section>
+</main>
 
-  </div>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/">Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-              <a href="/" class="nav-link">Home</a>
-          </li>
-          <!-- {% if user.is_authenticated %} -->
-          <li class="nav-item">
-              <a href="/logout" class="nav-link">Logout</a>
-          </li>
-          <!-- {% else %} -->
-          <li class="nav-item">
-              <a href="/signup" class="nav-link">Registrarse</a>
-          </li>
-          <li class="nav-item">
-              <a href="/signin" class="nav-link">Iniciar Sesion</a>
-          </li>
-          <!-- {% endif %} -->
-      </ul>
-      
-
-    </div>
-  
-  </div>
-
-
-  
-</nav>
 {% endblock %}
