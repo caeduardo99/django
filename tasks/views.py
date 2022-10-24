@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -39,6 +40,12 @@ def signup(request):
             'error': 'las contraseñas no coinciden'
         })
 
+@login_required
+def signout(request):
+    logout(request)
+    return redirect('home')
+
+
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
@@ -53,5 +60,5 @@ def signin(request):
                 "form": AuthenticationForm, 
                 "error": "Username or password is incorrect."
             })
-
+        login(request,user)
         return redirect('home')
