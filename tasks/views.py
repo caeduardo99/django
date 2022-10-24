@@ -1,15 +1,39 @@
+from ast import If
 from curses import use_default_colors
-import http
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 
 # Create your views here.
 
-def hola(request):
-    # return HttpResponse('hola mundo') 
-   # title= 'hello world'
-    return render(request,'signup.html', {
-        'form' : UserCreationForm
+def home(request):
+    return render(request, 'home.html', {
     })
+
+
+def signup(request):
+
+    if request.method == 'GET':
+        return render(request, 'signup.html', {
+            'form': UserCreationForm
+        })
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.create_user(
+                    username=request.POST["username"], password=request.POST["password1"])
+                user.save()
+                return HttpResponse('Usuario registrado exitosamente')
+            except:
+                return render(request, 'signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'El usuario ya existe'
+                })
+        return render(request, 'signup.html', {
+            'form': UserCreationForm,
+            'error': 'las contraseñas no coinciden'
+        })
