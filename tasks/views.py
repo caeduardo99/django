@@ -17,7 +17,7 @@ def home(request):
     })
 
 def dashboard(request):
-    Listar = Task.objects.all()
+    Listar = Task.objects.filter(user=request.user)
     return render(request, 'tasks.html', {'tasks': Listar})
 
 def create_task(request): 
