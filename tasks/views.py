@@ -1,5 +1,4 @@
 from ast import If
-from curses import use_default_colors
 
 
 from django.shortcuts import render,redirect
