@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-
+from .forms import  TaskForm
+from .models import Task
 # Create your views here.
 
 def home(request):
@@ -16,8 +17,20 @@ def home(request):
     })
 
 def dashboard(request):
-    return render(request, 'dashboard.html', {
+    Listar = Task.objects.all()
+    return render(request, 'tasks.html', {'tasks': Listar})
+
+def create_task(request): 
+    if request.method == 'GET':
+         return render(request, 'create_tasks.html',{
+        'form':TaskForm
     })
+    else:
+        form = TaskForm(request.POST)
+        new_task = form.save(commit=False)
+        new_task.user = request.user
+        new_task.save()
+        return redirect('/tasks')
 
 def signup(request):
 
