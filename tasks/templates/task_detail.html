@@ -7,19 +7,8 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
             <h1 class="h3">Lista de Tareas</h1>
         </div>
-  
-        <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-  
-        
-        <ul class="list-group">
-          {% for lol in tasks %}
-          <a href="{% url 'task_detail' lol.id %}">
-            <li class="list-group-item">{{lol.title}}</li>
-
-          </a>
-        
-          {% endfor%}
-        </ul>
+            <h1>{{task.title}}</h1>       
+            <h1>{{task.user}}</h1>       
       </main>
     </div>
   </div>

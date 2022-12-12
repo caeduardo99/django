@@ -1,7 +1,7 @@
 from ast import If
 
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
@@ -12,14 +12,20 @@ from .forms import  TaskForm
 from .models import Task
 # Create your views here.
 
+
+#Home
 def home(request):
     return render(request, 'home.html', {
     })
 
+
+#Tasks
 def dashboard(request):
     Listar = Task.objects.filter(user=request.user)
     return render(request, 'tasks.html', {'tasks': Listar})
 
+
+#Crear Tarea
 def create_task(request): 
     if request.method == 'GET':
          return render(request, 'create_tasks.html',{
@@ -32,6 +38,14 @@ def create_task(request):
         new_task.save()
         return redirect('/tasks')
 
+
+#Detalle de la Tarea
+def task_detail(request,task_id):
+    task= get_object_or_404(Task, pk=task_id)
+    return render(request, 'task_detail.html',{'task': task})
+
+
+#Registro Usuario    
 def signup(request):
 
     if request.method == 'GET':
@@ -55,17 +69,22 @@ def signup(request):
             'error': 'las contraseñas no coinciden'
         })
 
+
+#Vista protegida
 @login_required
 def signout(request):
     logout(request)
     return redirect('home')
 
 
+#Inicio Sesion
 def signin(request):
+    # Carga el form
     if request.method == 'GET':
         return render(request, 'signin.html', {
             "form": AuthenticationForm
         })
+    # Autentifica por POST
     else:
         user = authenticate(
             request, username=request.POST['username'], password=request.POST
